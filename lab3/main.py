@@ -5,6 +5,7 @@
 
 # Packages
 import numpy
+import matplotlib
 
 def main():
     print("AI Lab 3")
