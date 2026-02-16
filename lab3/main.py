@@ -36,10 +36,8 @@ def run_episode():
 
 def run_simulation():
     for episode in range(n_episodes):
+        run_episode()
         
-
-
-
 
 
 
