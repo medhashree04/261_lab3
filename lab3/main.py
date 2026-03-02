@@ -43,8 +43,32 @@ def update_Q(Q, state, action, reward, next_state, alpha, gamma):
     td_error = td_target - current_q_value 
     Q[state, action] = current_q_value + alpha * td_error
 
+"""
+Adapted from DoubleQlearning_2026_Eliott.pptx but ADJUSTED based on approach
+Pick an action for the current state using an epsilon-greedy policy.
+"""
 def pick_move():
-    print('implement')
+    i = 1
+    for i in states - 1:
+        if i in (4, 8, 12): # left wall movements
+            left = i
+        else:
+            left = i-1
+
+        if i in (3, 7, 11): # right wall movements
+            right = i
+        else:
+            right = i+1
+
+        if i in (1, 2, 3): # top wall movements
+            up = i
+        else:
+            up = i-4
+
+        if i in (12, 13, 14): # bottom wall movements
+            down = i
+        else:
+            down = i+4
 
 def run_episode():
     T+=1
@@ -61,7 +85,7 @@ def plotReinforcement():
     plt.xlabel("Episode Number")
     plt.ylabel("Average Reinforcement per Episode Across Simulations")
 
-    plt.legend()
+    # plt.legend()
     plt.show() # Display the plot
 
 """
@@ -72,7 +96,7 @@ def plotDuration():
     plt.xlabel("Episode Number")
     plt.ylabel("Average Episode Duration Across Simulations")
 
-    plt.legend()
+    # plt.legend()
     plt.show() # Display the plot
 
 def main():
