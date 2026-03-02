@@ -25,6 +25,7 @@ R_terminal = 0
 
 n_episodes = 10
 #set by us
+<<<<<<< HEAD
 def update_Q(Q, state, action, reward, next_state, alpha, gamma=gamma, terminal_states=terminal_states):
     """Q-learning update: Q[s,a] <- Q[s,a] + alpha*(target - Q[s,a])."""
     current_q = Q[state, action]
@@ -36,6 +37,10 @@ def update_Q(Q, state, action, reward, next_state, alpha, gamma=gamma, terminal_
 
     Q[state, action] = current_q + alpha * (target - current_q)
     return Q[state, action]
+=======
+def update_Q(S, ):
+    print('implement')
+>>>>>>> 9c53fa3edf58946e52eebdece302da40890f39b6
 
 def pick_move():
     print('implement')
