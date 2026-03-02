@@ -1,5 +1,5 @@
 # Group: Medhashree Adhikari, Jana Vadillo, Bonsen Yusuf
-# Due Date: Monday, February 28, 2026
+# Due Date: Sunday, March 01, 2026
 #
 # Acknowledgements: 
 
@@ -8,10 +8,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 gamma = 0.9
-T = 0
-P = 0
-alpha = [0.1, 1/T, 0.1, 1/T, 0.1 ,1/P]
-explore = [0.25, 1/T, 1/T, 0.1, 0.1, 0.1]
+# T = 0
+# P = 0
+# alpha = [0.1, 1/T, 0.1, 1/T, 0.1 ,1/P]
+# explore = [0.25, 1/T, 1/T, 0.1, 0.1, 0.1]
 n_sims = 1000
 ##learning algorithm variables 
 init_state = 12
@@ -52,11 +52,32 @@ def run_episode():
 def run_simulation():
     for episode in range(n_episodes):
         run_episode()
-        
 
+"""
+X-axis: Episode number (in chronological order)
+Y-axis: Average Reinforcement per Episode across simulations. 
+"""
+def plotReinforcement():
+    plt.xlabel("Episode Number")
+    plt.ylabel("Average Reinforcement per Episode Across Simulations")
 
+    plt.legend()
+    plt.show() # Display the plot
+
+"""
+X-axis: Episode number
+Y-axis: Average episode duration across simulations
+"""
+def plotDuration():
+    plt.xlabel("Episode Number")
+    plt.ylabel("Average Episode Duration Across Simulations")
+
+    plt.legend()
+    plt.show() # Display the plot
 
 def main():
+    plotReinforcement()
+    plotDuration()
     print("AI Lab 3")
 
 main()
