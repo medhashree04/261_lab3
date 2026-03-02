@@ -25,22 +25,23 @@ R_terminal = 0
 
 n_episodes = 10
 #set by us
-<<<<<<< HEAD
-def update_Q(Q, state, action, reward, next_state, alpha, gamma=gamma, terminal_states=terminal_states):
-    """Q-learning update: Q[s,a] <- Q[s,a] + alpha*(target - Q[s,a])."""
-    current_q = Q[state, action]
-
-    if next_state in terminal_states:
-        target = reward
-    else:
-        target = reward + gamma * np.max(Q[next_state])
-
-    Q[state, action] = current_q + alpha * (target - current_q)
-    return Q[state, action]
-=======
-def update_Q(S, ):
-    print('implement')
->>>>>>> 9c53fa3edf58946e52eebdece302da40890f39b6
+"""
+Update the Q-value for a given state-action pair using the Q-learning rule/equation.
+Q: Q-table storing action-value estimates (Q[s,a])
+state(int): the current state s where the agent takes action
+action(int): the action taken by the agent.
+reward(float): the immediate reward received after taking the action.
+next_state(int): the state the agent transitions to after doing an action.
+alpha(float): the learning rate/step size.
+gamma(float): the discount factor which determines how much futur rewards are vlaued comapred to immediate reward.
+returns: void
+"""
+def update_Q(Q, state, action, reward, next_state, alpha, gamma):
+    current_q_value = Q[state, action] #get the current q-val
+    max_future_q = np.max(Q[next_state]) #look at the possible actions in next state and select ,ax q-value.
+    td_target = reward + gamma * max_future_q #compute TD value
+    td_error = td_target - current_q_value 
+    Q[state, action] = current_q_value + alpha * td_error
 
 def pick_move():
     print('implement')
