@@ -11,7 +11,7 @@ import random
 gamma = 0.9
 
 
-n_sims = 1000
+n_sims = 10000
 ##learning algorithm variables 
 init_state = 12
 terminal_states = [0, 15]
@@ -24,7 +24,6 @@ R_terminal = 0
 #Rewards
 
 
-n_episodes = 10
 #set by us
 
 
@@ -91,7 +90,10 @@ def run_episode(Q,T, experiment):
         if np.random.random() < explore:#agent chooses to explore
             action = np.random.choice(moves)
         else: 
-            action = moves[np.argmax(Q[state])]#be greedy
+            max = np.max(Q[state])
+            best_actions = np.where(Q[state] == max)[0]
+            action_index  = np.random.choice(best_actions)
+            action = moves[action_index]#be greedy
         
 
   
@@ -99,18 +101,25 @@ def run_episode(Q,T, experiment):
 
         if state in terminal_states:
             break
-    return (P, Q)
+    return (P,T, Q)
 
 
-def run_simulation(experiment):
-    Q = np.zeros((16,4))
-    T = 0
-    avg_len =[]
-    for episode in range(n_episodes):
-        P, Q = run_episode(Q, T, experiment)
-        avg_len = np.append(avg_len, P)
-        print("\n Run number", episode, ": ", P)
-        print(Q)
+def run_simulation(experiment, n_episodes):
+    sim_lengths = [[] for _ in range(n_episodes)]  # Pre-initialize with empty lists for each episode
+    for sim in range(n_sims):
+        
+        print(experiment, sim)
+        Q = np.zeros((16,4))
+        T = 0
+        for episode in range(n_episodes):
+            P,T, Q = run_episode(Q, T, experiment)
+            sim_lengths[episode].append(P)  # Dynamically append to the episode's list
+            # print("\n Run number", episode, ": ", P)
+            # print(Q)
+    avg_len = [] 
+    for episode in range(len(sim_lengths)):  # Iterate over indices
+        avg_len.append(np.average(sim_lengths[episode]))  # Dynamically append average
+    return(avg_len)
     
     ## need to do, add code to plot avg reinforcement and avg len for each episode
 
@@ -126,23 +135,33 @@ def plotReinforcement():
     # plt.legend()
     plt.show() # Display the plot
 
-"""
-X-axis: Episode number
-Y-axis: Average episode duration across simulations
-"""
-def plotDuration():
-    plt.xlabel("Episode Number")
-    plt.ylabel("Average Episode Duration Across Simulations")
 
-    # plt.legend()
-    plt.show() # Display the plot
 
 def main():
     # plotReinforcement()
     # plotDuration()
+    episodes = [5, 10,25, 50, 100, 150, 200]
+    for episode in episodes:
+        fig, axs = plt.subplots(2, 1, figsize=(10, 8))
+        n_episodes = episode
+        for x in range(6):
 
-    for x in range(6):
-        run_simulation(x)
+            avg_len = run_simulation(x, n_episodes)
+            axs[0].plot(avg_len, label = x+1)
+            axs[1].plot(np.array(avg_len)*-1, label = x+1)
+        axs[0].set_xlabel("Episode Index")
+        axs[0].set_ylabel("Average Episode Duration Across Simulations")
+        axs[0].legend()
+        axs[1].set_xlabel("Episode Index")
+        axs[1].set_ylabel("Average reinforcement Across Simulations")
+        axs[1].legend()
+        title = f"{episode} episodes"
+
+        fig.suptitle(title+  ' avg in 10,000 sims')
+        plt.tight_layout()
+        plt.savefig(title + '.png')
+
+
 
     print("AI Lab 3")
     return()
