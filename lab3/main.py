@@ -1,7 +1,5 @@
 # Group: Medhashree Adhikari, Jana Vadillo, Bonsen Yusuf
 # Due Date: Sunday, March 01, 2026
-#
-# Acknowledgements: 
 
 # Packages
 import numpy as np
@@ -124,22 +122,7 @@ def run_simulation(experiment, n_episodes):
     ## need to do, add code to plot avg reinforcement and avg len for each episode
 
 
-"""
-X-axis: Episode number (in chronological order)
-Y-axis: Average Reinforcement per Episode across simulations. 
-"""
-def plotReinforcement():
-    plt.xlabel("Episode Number")
-    plt.ylabel("Average Reinforcement per Episode Across Simulations")
-
-    # plt.legend()
-    plt.show() # Display the plot
-
-
-
 def main():
-    # plotReinforcement()
-    # plotDuration()
     episodes = [5, 10,25, 50, 100, 150, 200]
     for episode in episodes:
         fig, axs = plt.subplots(2, 1, figsize=(10, 8))
@@ -161,9 +144,6 @@ def main():
         plt.tight_layout()
         plt.savefig(title + '.png')
 
-
-
-    print("AI Lab 3")
     return()
 
 main()
